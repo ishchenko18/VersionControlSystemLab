@@ -6,11 +6,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table
 @SequenceGenerator(name = "fileSequence", sequenceName = "FILE_SEQ")
-public class File {
+public class File implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "FILE_ID")

@@ -6,12 +6,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "PROGRAM_PRODUCT")
 @SequenceGenerator(name = "programSequence", sequenceName = "PROGRAM_SEQ")
-public class ProgramProduct {
+public class ProgramProduct implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "PP_ID")

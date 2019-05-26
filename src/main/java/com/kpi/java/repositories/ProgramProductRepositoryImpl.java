@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 
 import java.util.List;
 
-public class ProgramProductRepositoryImpl implements ProgramProductRepository {
+public class ProgramProductRepositoryImpl implements Repository<ProgramProduct> {
 
     private SessionFactory sessionFactory;
 
@@ -18,13 +18,16 @@ public class ProgramProductRepositoryImpl implements ProgramProductRepository {
     @Override
     public List<ProgramProduct> findAll() {
         Session session = sessionFactory.openSession();
-
         List<ProgramProduct> programProducts = session.createQuery("from ProgramProduct", ProgramProduct.class).list();
-
         session.close();
 
         return programProducts;
     }
 
-
+    @Override
+    public void save(ProgramProduct programProduct) {
+        Session session = sessionFactory.openSession();
+        session.save(programProduct);
+        session.close();
+    }
 }
