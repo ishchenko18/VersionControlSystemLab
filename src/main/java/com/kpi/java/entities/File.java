@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table
+@Table(name = "FILES")
 @SequenceGenerator(name = "fileSequence", sequenceName = "FILE_SEQ")
 public class File implements Serializable {
 
@@ -27,7 +27,7 @@ public class File implements Serializable {
     private Long version;
 
     @OneToOne
-    @JoinColumn(name = "PREVIOUS_FILE_FK", referencedColumnName = "FILE_IF")
+    @JoinColumn(name = "PREVIOUS_FILE_FK", referencedColumnName = "FILE_ID")
     private File previousFile;
 
     @ManyToOne

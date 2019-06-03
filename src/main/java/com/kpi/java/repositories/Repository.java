@@ -6,4 +6,6 @@ public interface Repository<T> {
     List<T> findAll();
 
     void save(T t);
+
+    void delete(Long id);
 }

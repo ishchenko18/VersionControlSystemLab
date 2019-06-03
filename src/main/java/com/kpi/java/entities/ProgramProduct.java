@@ -27,7 +27,7 @@ public class ProgramProduct implements Serializable {
     @Column(name = "VERSION")
     private Long version;
 
-    @OneToMany(mappedBy = "programProduct")
+    @OneToMany(mappedBy = "programProduct", fetch = FetchType.EAGER)
     private List<File> files;
 
     public Long getId() {

@@ -30,4 +30,9 @@ public class ProgramProductRepositoryImpl implements Repository<ProgramProduct> 
         session.save(programProduct);
         session.close();
     }
+
+    @Override
+    public void delete(Long id) {
+        throw new UnsupportedOperationException();
+    }
 }

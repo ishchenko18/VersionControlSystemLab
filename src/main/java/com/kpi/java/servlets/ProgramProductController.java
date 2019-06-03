@@ -1,6 +1,7 @@
 package com.kpi.java.servlets;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kpi.java.services.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @WebServlet(description = "Controller for getting full list of program products", urlPatterns = "/programs")
-public class AllProgramProductController extends HttpServlet {
+public class ProgramProductController extends HttpServlet {
 
     private ProjectService projectService;
 
@@ -36,6 +37,7 @@ public class AllProgramProductController extends HttpServlet {
         }
 
         resp.getWriter().write(result);
+        req.setAttribute("name", "Gavno");
     }
 
     @Override

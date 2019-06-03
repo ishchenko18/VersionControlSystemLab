@@ -5,4 +5,18 @@
 <web-app>
     <display-name>Version Control System</display-name>
     <description>Lab work for practice in web development</description>
+
+<!--    <servlet>
+        <servlet-name>ProgramProductController</servlet-name>
+        <servlet-class>com.kpi.java.servlets.ProgramProductController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProgramProductController</servlet-name>
+        <url-pattern>/progrmes</url-pattern>
+    </servlet-mapping>-->
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

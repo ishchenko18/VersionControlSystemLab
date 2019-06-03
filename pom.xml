@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <servlet.version>4.0.0</servlet.version>
+        <servlet.version>3.1.0</servlet.version>
         <hibernate.core.version>5.3.7.Final</hibernate.core.version>
         <hibernate.annotations.version>3.2.0.Final</hibernate.annotations.version>
         <oracle.version>11.2.0.3</oracle.version>
@@ -35,8 +35,8 @@
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-commons-annotations</artifactId>
-            <version>${hibernate.annotations.version}</version>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.3.6.Final</version>
         </dependency>
 
         <dependency>
@@ -81,6 +81,18 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -104,6 +116,13 @@
                             <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                 </configuration>
             </plugin>
         </plugins>
