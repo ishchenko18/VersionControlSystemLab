@@ -63,7 +63,8 @@ public class ProgramProductController extends HttpServlet {
         String inputJson = req.getReader().readLine();
 
         if (StringUtils.isNotBlank(inputJson)) {
-            projectService.updateProject(inputJson);
+            ProgramProductDTO programProductDTO = projectService.updateProject(inputJson);
+            req.getSession().setAttribute("project", programProductDTO);
         }
     }
 }

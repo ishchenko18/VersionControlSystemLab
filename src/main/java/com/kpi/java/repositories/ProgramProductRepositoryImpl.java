@@ -1,20 +1,12 @@
 package com.kpi.java.repositories;
 
-import com.kpi.java.configs.DataSourceBuilder;
 import com.kpi.java.entities.ProgramProduct;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class ProgramProductRepositoryImpl implements Repository<ProgramProduct> {
-
-    private SessionFactory sessionFactory;
-
-    public ProgramProductRepositoryImpl() {
-        sessionFactory = DataSourceBuilder.buildEntityManager();
-    }
+public class ProgramProductRepositoryImpl extends RepositoryAbstract<ProgramProduct> {
 
     @Override
     public List<ProgramProduct> findAll() {
@@ -23,35 +15,6 @@ public class ProgramProductRepositoryImpl implements Repository<ProgramProduct> 
         session.close();
 
         return programProducts;
-    }
-
-    @Override
-    public void saveOrUpdate(ProgramProduct programProduct) {
-
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-
-            transaction = session.beginTransaction();
-
-            session.saveOrUpdate(programProduct);
-
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-            throw e;
-        }
-    }
-
-    @Override
-    public ProgramProduct findById(Long id) {
-        Session session = sessionFactory.openSession();
-        ProgramProduct programProduct = session.get(ProgramProduct.class, id);
-        session.close();
-
-        return programProduct;
     }
 
     @Override
@@ -73,5 +36,10 @@ public class ProgramProductRepositoryImpl implements Repository<ProgramProduct> 
 
             throw e;
         }
+    }
+
+    @Override
+    public ProgramProduct findByNameAndVersion(String name, Long version) {
+        throw new UnsupportedOperationException();
     }
 }

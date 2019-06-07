@@ -9,31 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        function openPage(pageURL) {
-            window.location.href = pageURL;
-        }
-
-        function createRepository() {
-            var repositoryName = document.getElementById("repositoryNameInput").value;
-
-            if (repositoryName) {
-                $.ajax({
-                    type: "POST",
-                    url: "/version_control_system_war_exploded/programs",
-                    data: '{"name": "' + repositoryName + '"}',
-                    success: function () {
-                        alert("Repository '" + repositoryName + "' saved in system.");
-                    },
-                    error: function () {
-                        alert("Repository isn't created.");
-                    }
-                });
-            } else {
-                alert("Please, enter some value.")
-            }
-        }
-    </script>
+    <script src="../js/repositories-controller.js"></script>
 </head>
 <body>
 <div id="container">

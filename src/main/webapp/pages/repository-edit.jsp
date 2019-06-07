@@ -12,66 +12,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="../js/repository-edit-controller.js"></script>
     <%
         ProgramProductDTO productDTO = (ProgramProductDTO) request.getSession().getAttribute("project");
         List<File> files = productDTO.getFiles();
     %>
-    <script type="text/javascript">
-        function openPage(pageURL) {
-            window.location.href = pageURL;
-        }
-
-        function updateRepository() {
-            var repositoryName = document.getElementById("repositoryNameInput").value;
-            var repositoryVersion = document.getElementById("repositoryVersionInput").value;
-            var id = '<%=productDTO.getId()%>';
-
-            if (repositoryName && repositoryVersion) {
-                if (!isSameRepository(repositoryName, repositoryVersion)) {
-                    $.ajax({
-                        type: "PUT",
-                        url: "/version_control_system_war_exploded/programs",
-                        data: '{"id":"' + id + '",' +
-                              ' "name":"' + repositoryName + '",' +
-                              ' "version": "' + repositoryVersion + '"}',
-                        success: function () {
-                            alert("Repository '" + repositoryName + "' saved in system.");
-                        },
-                        error: function () {
-                            alert("Repository isn't created.");
-                        }
-                    });
-                } else {
-                    alert("The repository is same.");
-                }
-            } else {
-                alert("Fields 'Repository Name' and 'Repository Version' should be fulfilled.")
-            }
-        }
-
-        function isSameRepository(name, version) {
-            var initialName = '<%=productDTO.getName()%>';
-            var initialVersion = '<%=productDTO.getVersion()%>';
-
-
-            return initialName === name && initialVersion === version;
-        }
-
-        function removeFile(fileId) {
-            var fileName = document.getElementById("fileName").value;
-
-            $.ajax({
-                type: "DELETE",
-                url: "/version_control_system_war_exploded/files?id=" + fileId,
-                success: function () {
-                    alert("Repository '" + fileName + "' successfully deleted from system.");
-                },
-                error: function () {
-                    alert("Repository isn't deleted.");
-                }
-            });
-        }
-    </script>
 </head>
 <body>
 <div id="container">
@@ -100,10 +45,14 @@
                        name="projectName" placeholder="Enter Repository name" value="<%=productDTO.getName()%>"/>
 
                 <label for="repositoryVersionInput">Version of Repository</label>
-                <input id="repositoryVersionInput" class="form-control" style="width: 70%; margin-bottom: 10px" type="text"
+                <input id="repositoryVersionInput" class="form-control" style="width: 70%; margin-bottom: 10px"
+                       type="text"
                        name="projectName" placeholder="Enter Repository version"
                        value="<%=productDTO.getVersion() == null ? "" : productDTO.getVersion()%>"/>
-                <button type="submit" class="btn btn-primary" onclick="updateRepository()">Submit</button>
+                <button type="submit" class="btn btn-primary"
+                        onclick="updateRepository('<%=productDTO.getId()%>', '<%=productDTO.getName()%>', '<%=productDTO.getVersion()%>')">
+                    Submit
+                </button>
             </div>
         </div>
         <div id="fileListDiv" class="div-file-create">
@@ -117,11 +66,8 @@
                     <span id="fileName" class="repository-name" style="text-align: center">
                         <%=file.getName()%> - <%=file.getVersion()%>
                     </span>
-                    <button type="button" class="btn btn-default pull-right" onclick="removeFile(<%=file.getId()%>)">
+                    <button type="button" class="btn btn-default pull-right" onclick="removeFile('<%=file.getId()%>', '<%=file.getName()%>')">
                         <span class="glyphicon glyphicon-trash"/>
-                    </button>
-                    <button type="button" class="btn btn-default pull-right" >
-                        <span class="glyphicon glyphicon-edit"/>
                     </button>
                 </li>
                 <%
@@ -132,7 +78,8 @@
             <h4 class="no-repositories">You don't have any files in this repository.</h4>
             <% } %>
             <div id="addFileButton">
-                <button type="button" class="btn btn-success btn-lg button-start" data-toggle="modal" data-target="#modalCreateFileForm">
+                <button type="button" class="btn btn-success btn-lg button-start" data-toggle="modal"
+                        data-target="#modalCreateFileForm">
                     Add New File
                 </button>
             </div>
@@ -151,19 +98,20 @@
                     <div class="modal-body mx-3">
                         <div class="md-form mb-5">
                             <i class="fas fa-envelope prefix grey-text"></i>
-                            <label data-error="wrong" data-success="right" for="defaultForm-email">Name</label>
-                            <input type="text" id="defaultForm-email" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultFormFileName">Name</label>
+                            <input type="text" id="defaultFormFileName" class="form-control validate">
                         </div>
 
                         <div class="md-form mb-4">
                             <i class="fas fa-lock prefix grey-text"></i>
-                            <label data-error="wrong" data-success="right" for="defaultForm-pass">Version</label>
-                            <input type="number" id="defaultForm-pass" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="defaultFormFileVersion">Version</label>
+                            <input type="number" id="defaultFormFileVersion" class="form-control validate">
                         </div>
 
                     </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button class="btn btn-default">Create</button>
+                    <div class="modal-footer d-flex justify-content-center" data-dismiss="modal">
+                        <button class="btn btn-default" onclick="addFileToRepository(<%=productDTO.getId()%>)">Create
+                        </button>
                     </div>
                 </div>
             </div>

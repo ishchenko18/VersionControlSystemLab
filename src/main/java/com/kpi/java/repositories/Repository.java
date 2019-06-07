@@ -10,4 +10,6 @@ public interface Repository<T> {
     void delete(Long id);
 
     T findById(Long id);
+
+    T findByNameAndVersion(String name, Long version);
 }

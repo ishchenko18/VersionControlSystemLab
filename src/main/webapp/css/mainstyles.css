@@ -51,7 +51,7 @@ html, body {
     text-align: center;
     margin-top: 10%
 }
-
+/*
 .open-button {
     background-color: #555;
     color: white;
@@ -65,7 +65,7 @@ html, body {
     width: 280px;
 }
 
-/* The popup form - hidden by default */
+!* The popup form - hidden by default *!
 .form-popup {
     display: none;
     position: fixed;
@@ -75,14 +75,14 @@ html, body {
     z-index: 9;
 }
 
-/* Add styles to the form container */
+!* Add styles to the form container *!
 .form-container {
     max-width: 300px;
     padding: 10px;
     background-color: white;
 }
 
-/* Full-width input fields */
+!* Full-width input fields *!
 .form-container input[type=text], .form-container input[type=number] {
     width: 100%;
     padding: 15px;
@@ -91,13 +91,13 @@ html, body {
     background: #f1f1f1;
 }
 
-/* When the inputs get focus, do something */
+!* When the inputs get focus, do something *!
 .form-container input[type=text]:focus, .form-container input[type=number]:focus {
     background-color: #ddd;
     outline: none;
 }
 
-/* Set a style for the submit/login button */
+!* Set a style for the submit/login button *!
 .form-container .btn-form {
     background-color: #4CAF50;
     color: white;
@@ -109,10 +109,10 @@ html, body {
     opacity: 0.8;
 }
 
-/* Add a red background color to the cancel button */
+!* Add a red background color to the cancel button *!
 .form-container .cancel {
     background-color: red;
-}
+}*/
 
 /* Add some hover effects to buttons */
 .form-container .btn-form:hover, .open-button:hover {
@@ -122,4 +122,8 @@ html, body {
 .div-file-create {
     width: 30%;
     float: left
+}
+
+#addFileButton {
+    margin-left: 165px;
 }

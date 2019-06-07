@@ -11,49 +11,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="../js/repositories-controller.js"></script>
     <jsp:include page="/programs"/>
     <%
         List<ProgramProductDTO> programs = (List) request.getSession().getAttribute("projects");
     %>
-    <script type="text/javascript">
-        function openPage(pageURL) {
-            window.location.href = pageURL;
-        }
-
-        function removeRepository(repositoryId) {
-            var repositoryName = document.getElementById("repositoryName").value;
-
-            $.ajax({
-                type: "DELETE",
-                url: "/version_control_system_war_exploded/programs",
-                data: '{"repositoryId":' + repositoryId + '}',
-                success: function () {
-                    alert("Repository '" + repositoryName + "' successfully deleted from system.");
-                },
-                error: function (msg) {
-                    alert("Repository isn't deleted." + msg);
-                }
-            });
-        }
-
-        function editRepository(repositoryId) {
-            $.ajax({
-                type: "GET",
-                async: false,
-                url: "/version_control_system_war_exploded/programs?repositoryId=" + repositoryId
-            });
-
-            openPage('/version_control_system_war_exploded/pages/repository-edit.jsp');
-        }
-
-/*        function openForm() {
-            document.getElementById("edit-repository-popup").style.display = "block";
-        }
-
-        function closeForm() {
-            document.getElementById("edit-repository-popup").style.display = "none";
-        }*/
-    </script>
 </head>
 <body>
 <div id="container">
@@ -82,19 +44,18 @@
                     for (ProgramProductDTO program : programs) {
                 %>
                 <li class="list-group-item">
-                    <span id="repositoryName" class="repository-name"<%--  data-toggle="collapse" data-target="#smth" aria-expanded="false" aria-controls="smth"--%>>
+                    <span id="repositoryName" class="repository-name">
                         <%=program.getName()%> - <%=program.getVersion()%>
                     </span>
-                    <button type="button" class="btn btn-default pull-right" onclick="removeRepository(<%=program.getId()%>)">
+                    <button type="button" class="btn btn-default pull-right"
+                            onclick="removeRepository('<%=program.getId()%>', '<%=program.getName()%>')">
                         <span class="glyphicon glyphicon-trash"/>
                     </button>
-                    <button type="button" class="btn btn-default pull-right" onclick="editRepository(<%=program.getId()%>)">
+                    <button type="button" class="btn btn-default pull-right"
+                            onclick="editRepository(<%=program.getId()%>)">
                         <span class="glyphicon glyphicon-edit"/>
                     </button>
                 </li>
-<%--                <div id="smth" class="collapse multi-collapse">
-                    <a>fgdsfgdfgsd</a>
-                </div>--%>
                 <%
                     }
                 %>
@@ -102,21 +63,6 @@
             <% } else { %>
             <h4 class="no-repositories">You don't have any repositories</h4>
             <% } %>
-
-<%--            <div id="edit-repository-popup" class="form-popup">
-                <form class="form-container">
-                    <h1>Updating</h1>
-
-                    <label for="name"><b>Repository Name</b></label>
-                    <input type="text" placeholder="Enter name" id="name" required>
-
-                    <label for="version"><b>Version</b></label>
-                    <input type="number" min="1" placeholder="Enter version" id="version" required>
-
-                    <button type="submit" class="btn-form" onclick="">Save</button>
-                    <button type="button" class="btn-form cancel" onclick="closeForm()">Close</button>
-                </form>
-            </div>--%>
         </div>
     </div>
     <div id="footer" class="bg-dark">

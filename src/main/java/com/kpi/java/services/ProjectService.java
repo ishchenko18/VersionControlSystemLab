@@ -55,10 +55,12 @@ public class ProjectService {
         return programProductMapper.map2Dto(programProduct);
     }
 
-    public void updateProject(String request) throws IOException {
+    public ProgramProductDTO updateProject(String request) throws IOException {
         ProgramProductDTO programProductDTO = objectMapper.readValue(request, ProgramProductDTO.class);
         ProgramProduct programProduct = programProductMapper.map2Entity(programProductDTO);
 
         programProductRepository.saveOrUpdate(programProduct);
+
+        return programProductMapper.map2Dto(programProduct);
     }
 }
