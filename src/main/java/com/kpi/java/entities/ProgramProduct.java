@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PROGRAM_PRODUCT")
-@SequenceGenerator(name = "programSequence", sequenceName = "PROGRAM_SEQ")
+@SequenceGenerator(name = "programSequence", sequenceName = "PROGRAM_SEQ", allocationSize = 1)
 public class ProgramProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +24,7 @@ public class ProgramProduct implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "VERSION")
+    @Column(name = "VERSION", insertable = false)
     private Long version;
 
     @OneToMany(mappedBy = "programProduct", fetch = FetchType.EAGER)

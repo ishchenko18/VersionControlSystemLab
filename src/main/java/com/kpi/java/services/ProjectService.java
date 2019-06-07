@@ -1,7 +1,7 @@
 package com.kpi.java.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kpi.java.dtos.ProgramProductDTO;
 import com.kpi.java.entities.ProgramProduct;
 import com.kpi.java.mappers.ProgramProductMapper;
@@ -27,18 +27,38 @@ public class ProjectService {
         programProductMapper = new ProgramProductMapperImpl();
     }
 
-    public String getAllExistedProjects() throws JsonProcessingException {
-        List<ProgramProductDTO> programProductList = programProductRepository.findAll().stream()
+    public List<ProgramProductDTO> getAllExistedProject() {
+        return programProductRepository.findAll().stream()
                 .map(programProductMapper::map2Dto)
                 .collect(Collectors.toList());
-
-        return objectMapper.writeValueAsString(programProductList);
     }
 
     public void addNewProjectUnderVersionControl(String request) throws IOException {
         ProgramProductDTO programProductDTO = objectMapper.readValue(request, ProgramProductDTO.class);
         ProgramProduct programProduct = programProductMapper.map2Entity(programProductDTO);
 
-        programProductRepository.save(programProduct);
+        programProductRepository.saveOrUpdate(programProduct);
+    }
+
+    public void deleteProjectFromVersionControl(String request) throws IOException {
+        ObjectNode objectNode = objectMapper.readValue(request, ObjectNode.class);
+
+        if (objectNode.has("repositoryId")) {
+            Long projectId = objectNode.get("repositoryId").asLong();
+            programProductRepository.delete(projectId);
+        }
+    }
+
+    public ProgramProductDTO getProject(Long id) {
+        ProgramProduct programProduct = programProductRepository.findById(id);
+
+        return programProductMapper.map2Dto(programProduct);
+    }
+
+    public void updateProject(String request) throws IOException {
+        ProgramProductDTO programProductDTO = objectMapper.readValue(request, ProgramProductDTO.class);
+        ProgramProduct programProduct = programProductMapper.map2Entity(programProductDTO);
+
+        programProductRepository.saveOrUpdate(programProduct);
     }
 }

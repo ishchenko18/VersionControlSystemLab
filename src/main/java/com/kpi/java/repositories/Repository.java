@@ -5,7 +5,9 @@ import java.util.List;
 public interface Repository<T> {
     List<T> findAll();
 
-    void save(T t);
+    void saveOrUpdate(T t);
 
     void delete(Long id);
+
+    T findById(Long id);
 }

@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "FILES")
-@SequenceGenerator(name = "fileSequence", sequenceName = "FILE_SEQ")
+@SequenceGenerator(name = "fileSequence", sequenceName = "FILE_SEQ", allocationSize = 1)
 public class File implements Serializable {
 
     private static final long serialVersionUID = 1L;

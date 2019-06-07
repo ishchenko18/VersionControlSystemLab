@@ -23,25 +23,32 @@ public class FileRepositoryImpl implements Repository<File> {
     }
 
     @Override
-    public void save(File file) {
+    public void saveOrUpdate(File file) {
         throw new UnsupportedOperationException();
     }
 
     @Override
+    public File findById(Long id) {
+        return null;
+    }
+
+    @Override
     public void delete(Long id) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
 
-        try {
-            Query query = session.createQuery("delete from File where id= :id");
-            query.setParameter("id", id);
+            transaction = session.beginTransaction();
 
-            query.executeUpdate();
+            File programProduct = session.get(File.class, id);
+            session.delete(programProduct);
 
             transaction.commit();
-        } catch (Throwable t) {
-            transaction.rollback();
-            throw t;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+
+            e.printStackTrace();
         }
     }
 }

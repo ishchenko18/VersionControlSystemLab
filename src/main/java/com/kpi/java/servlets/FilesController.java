@@ -36,7 +36,7 @@ public class FilesController extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 
-        if (StringUtils.isNotBlank(id)) {
+        if (StringUtils.isNotBlank(id) && StringUtils.isNumeric(id)) {
             Long longId = Long.valueOf(id);
 
             repository.delete(longId);

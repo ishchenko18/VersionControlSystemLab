@@ -1,7 +1,6 @@
 package com.kpi.java.servlets;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kpi.java.dtos.ProgramProductDTO;
 import com.kpi.java.services.ProjectService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Slf4j
 @WebServlet(description = "Controller for getting full list of program products", urlPatterns = "/programs")
@@ -27,22 +26,44 @@ public class ProgramProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String result = StringUtils.EMPTY;
 
-        try {
-            result = projectService.getAllExistedProjects();
-        } catch (JsonProcessingException e) {
-            log.error("Error in processing object");
-            resp.sendError(400, "Error in processing object");
+        String projectId = req.getParameter("repositoryId");
+
+        if (StringUtils.isNotBlank(projectId) && StringUtils.isNumeric(projectId)) {
+
+            ProgramProductDTO programProductDTO = projectService.getProject(Long.valueOf(projectId));
+            req.getSession().setAttribute("project", programProductDTO);
+        } else {
+            List<ProgramProductDTO> result = projectService.getAllExistedProject();
+            req.getSession().setAttribute("projects", result);
         }
-
-        resp.getWriter().write(result);
-        req.setAttribute("name", "Gavno");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String request = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        projectService.addNewProjectUnderVersionControl(request);
+
+        String name = req.getReader().readLine();
+
+        if (StringUtils.isNotBlank(name)) {
+            projectService.addNewProjectUnderVersionControl(name);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String inputJson = req.getReader().readLine();
+
+        if (StringUtils.isNotBlank(inputJson)) {
+            projectService.deleteProjectFromVersionControl(inputJson);
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String inputJson = req.getReader().readLine();
+
+        if (StringUtils.isNotBlank(inputJson)) {
+            projectService.updateProject(inputJson);
+        }
     }
 }
