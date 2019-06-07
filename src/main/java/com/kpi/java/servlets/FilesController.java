@@ -1,7 +1,6 @@
 package com.kpi.java.servlets;
 
 import com.kpi.java.dtos.ProgramProductDTO;
-import com.kpi.java.entities.File;
 import com.kpi.java.services.FilesService;
 import org.apache.commons.lang3.StringUtils;
 
