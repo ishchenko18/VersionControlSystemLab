@@ -60,6 +60,7 @@ public class ProjectService {
         ProgramProduct programProduct = programProductMapper.map2Entity(programProductDTO);
 
         programProductRepository.saveOrUpdate(programProduct);
+        programProduct = programProductRepository.findById(programProduct.getId());
 
         return programProductMapper.map2Dto(programProduct);
     }

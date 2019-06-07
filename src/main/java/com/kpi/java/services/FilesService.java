@@ -83,7 +83,8 @@ public class FilesService {
         file.setProgramProduct(programProduct);
 
         fileRepository.saveOrUpdate(file);
+        programProduct = programProductRepository.findById(programProductId);
 
-        return programProductMapper.map2Dto(file.getProgramProduct());
+        return programProductMapper.map2Dto(programProduct);
     }
 }
