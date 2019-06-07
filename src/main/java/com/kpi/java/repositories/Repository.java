@@ -12,4 +12,6 @@ public interface Repository<T> {
     T findById(Long id);
 
     T findByNameAndVersion(String name, Long version);
+
+    T findChild(Long id);
 }

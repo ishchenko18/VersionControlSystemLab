@@ -42,4 +42,9 @@ public class ProgramProductRepositoryImpl extends RepositoryAbstract<ProgramProd
     public ProgramProduct findByNameAndVersion(String name, Long version) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public ProgramProduct findChild(Long id) {
+        throw new UnsupportedOperationException();
+    }
 }

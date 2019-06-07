@@ -57,4 +57,18 @@ public class FileRepositoryImpl extends RepositoryAbstract<File> {
 
         return file;
     }
+
+    @Override
+    public File findChild(Long id) {
+        Session session = sessionFactory.openSession();
+
+        Query<File> query = session.createQuery("from File where previous_file_fk = :previous", File.class);
+        query.setParameter("previous", id);
+
+        File file = query.uniqueResult();
+
+        session.close();
+
+        return file;
+    }
 }
