@@ -46,4 +46,25 @@ public abstract class RepositoryAbstract<T> implements Repository<T> {
 
         return file;
     }
+
+    @Override
+    public void delete(Long id) {
+
+        Transaction transaction = null;
+        try (Session session = sessionFactory.openSession()) {
+
+            transaction = session.beginTransaction();
+
+            T t = session.get(persistentClass, id);
+            session.delete(t);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+
+            throw e;
+        }
+    }
 }
