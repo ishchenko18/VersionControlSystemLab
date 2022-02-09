@@ -11,7 +11,7 @@
 
     <properties>
         <servlet.version>3.1.0</servlet.version>
-        <hibernate.core.version>5.3.7.Final</hibernate.core.version>
+        <hibernate.core.version>5.4.24.Final</hibernate.core.version>
         <hibernate.annotations.version>3.2.0.Final</hibernate.annotations.version>
         <oracle.version>11.2.0.3</oracle.version>
         <apache.commons.version>3.5</apache.commons.version>
